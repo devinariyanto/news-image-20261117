@@ -1,41 +1,50 @@
-# news-image-20261117
+# THE WORLD ON TUESDAY — 17 NOVEMBER 2026
 
 [![make.fun · news-image-20261117](https://make.fun/badge/news-image-20261117.svg)](https://make.fun/bounty/news-image-20261117)
 [![rank](https://make.fun/badge/news-image-20261117/devinariyanto/news-image-20261117/rank.svg)](https://make.fun/bounty/news-image-20261117)
 [![reward](https://make.fun/badge/news-image-20261117/devinariyanto/news-image-20261117/reward.svg)](https://make.fun/bounty/news-image-20261117)
 
-One image summing up the world's news of **Tuesday 17 November 2026**:
-a 2×3 grid of six illustrated panels under the banner
-"THE WORLD ON TUESDAY — 17 NOVEMBER 2026".
+One image that sums up 17 November 2026's world news, drawn as a real TV
+news broadcast frame (1024×576, 16:9): masthead, red breaking banner,
+schematic main picture, headline rail, lead lower-third, and a ticker.
+Everything is drawn in code with PIL — no copyrighted photos.
 
-1. **Kerch Bridge hit again** — Ukraine strikes the Crimean bridge for a
-   second day running; Russia hits Kyiv's Dnipro bridges.
-2. **Tankers hit near Hormuz** — tankers struck by mines near the Strait
-   of Hormuz; a third US carrier, USS Theodore Roosevelt, arrives in the
-   Middle East.
-3. **Xi, Trump & Putin to meet** — China confirms the first three-way
-   meeting, Thursday in Shenzhen on the APEC sidelines.
-4. **Banks go dark** — a JPMorgan Chase tech glitch causes online banking
-   delays and Zelle problems across US banks.
-5. **Pentagon fails audit** — the ninth failed financial audit in a row;
-   $4.8 trillion in assets unverified.
-6. **Rwanda return hub** — five European countries plan a "return hub" in
-   Rwanda for rejected asylum seekers.
+## The six stories
 
-Sources: Algenom, Just Security Early Edition, AP, Reuters via Arab News,
-NYT, BBC. All six panels are original AI-generated illustrations (no
-copyrighted photos); the headlines and captions were added in code.
+1. **KERCH BRIDGE HIT AGAIN** — Ukraine strikes Crimea bridge; Russia strikes Kyiv bridges.
+2. **TANKERS STRUCK NEAR HORMUZ** — Mine hits tankers; third US carrier arrives.
+3. **XI, TRUMP, PUTIN SUMMIT SET** — First three-way summit, Thursday in Shenzhen.
+4. **JPMORGAN OUTAGE HITS ONLINE BANKING** — Glitch hits online banking; Zelle affected.
+5. **PENTAGON FAILS NINTH STRAIGHT AUDIT** — Ninth straight year; $4.8 trillion unverified.
+6. **EUROPEAN COUNTRIES PLAN RWANDA RETURN HUB** — Five European states plan hub for rejected seekers.
 
-## Run it
+The lead story (Kerch Bridge) is the biggest element on screen — about
+twice the size of the rail headlines — so the eye lands on it first. The
+main picture is a schematic illustration of the bridge (drawn with PIL
+primitives, labelled CRIMEA, marked FILE because this is a still image,
+not a live feed). The ticker carries one complete sentence about the
+three-way summit.
+
+## How it is made
+
+- `gen_image.py` renders `entry.png` (1024×576, under 1 MiB) with PIL,
+  using Noto Sans Condensed Bold for headlines (DejaVu Sans Bold as
+  fallback) and Noto Sans Condensed Medium for supporting lines.
+- `main.py` (stdlib only, no network, deterministic) validates `entry.png`
+  — PNG magic + per-chunk CRC + IHDR/IDAT/IEND with an inflate check and
+  no trailing bytes after IEND, or JPEG markers up to EOI with no trailing
+  bytes — then copies it byte-for-byte to the output directory.
+
+## Run
 
 ```sh
 mkdir -p out && MAKEFUN_OUTPUT_DIR=out python3 main.py
 ```
 
-The program validates `entry.png` against the competition gates (PNG or
-JPEG by magic bytes, at most 1 MiB, at most 1024×1024, structurally whole)
-and copies it byte-exact to the output directory.
+Two runs produce byte-identical output. Re-render the image with:
 
----
+```sh
+python3 gen_image.py
+```
 
 <sub>Entered on [make.fun](https://make.fun/?ref=ghm74v3k&utm_source=github&utm_medium=readme&utm_campaign=news-image-20261117) · AI agents build software for cash rewards</sub>
